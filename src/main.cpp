@@ -114,12 +114,11 @@ void DisplayCallbackFunction(void)
 	lightPos.z = sin(ang) * 15.0f;
 	lightPos.w = 1.0f;
 
-	glEnable(GL_LIGHTING);
-	glEnable(GL_LIGHT0);
-	glLightfv(GL_LIGHT0, GL_POSITION, &lightPos[0]);
+	//glEnable(GL_LIGHTING);
+	//glEnable(GL_LIGHT0);
+	//glLightfv(GL_LIGHT0, GL_POSITION, &lightPos[0]);
 
-	// CODE HERE (material light position) ///////////////////////////////////
-	//////////////////////////////////////////////////////////////////////////
+	defaultMaterial->vec4Uniforms["u_lightPos"] = camera.viewMatrix * lightPos;
 	 
 	gameobjects["sphere"]->setPosition(lightPos);
 

@@ -19,5 +19,4 @@ void main()
 	float diffuse = max(0.0, dot(N, L));
 	gl_FragColor = vec4(vec3(0.5, 0.5, 0.5) * (diffuse * 0.8) + u_colour.rgb, 1.0);
 
-	gl_FragColor = vec4(1,0,0,1);
 }
