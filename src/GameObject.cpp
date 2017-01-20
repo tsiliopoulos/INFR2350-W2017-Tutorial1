@@ -90,8 +90,8 @@ void GameObject::draw(TTK::Camera &camera)
 
 	//glLoadMatrixf(glm::value_ptr(camera.viewProjMatrix * m_pLocalToWorldMatrix));
 
-	mesh->draw_1_0();
-	//mesh->draw();
+	//mesh->draw_1_0();
+	mesh->draw();
 
 	// Draw children
 	for (unsigned int i = 0; i < m_pChildren.size(); ++i)

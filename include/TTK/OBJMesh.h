@@ -20,6 +20,7 @@ namespace TTK
 	public:
 		void loadMesh(std::string filename);
 	private:
+		int numFaces;
 		void createVBO();
 	};
 }

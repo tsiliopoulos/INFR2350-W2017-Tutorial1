@@ -102,13 +102,56 @@ void TTK::OBJMesh::loadMesh(std::string filename)
 		textureCoordinates.push_back(objUVs[face->texture3 - 1]);
 	}
 
+	numFaces = objFaces.size();
+
 	// Setup VBO
 	createVBO();
 }
 
 void TTK::OBJMesh::createVBO()
 {
-	// CODE HERE /////////////////////////////////////////////////////////////
-	//////////////////////////////////////////////////////////////////////////
+	// vertex
+	AttributeDescriptor positionAttrib;
+	positionAttrib.attributeLocation = AttributeLocations::VERTEX;
+	positionAttrib.attributeName = "vertex";
+	positionAttrib.data = &vertices[0];
+	positionAttrib.elementSize = sizeof(float);
+	positionAttrib.elementType = GL_FLOAT;
+
+	// number of triangles * 3 vertices per triangle * 3 floats per vertex
+	positionAttrib.numElements = numFaces * 3 * 3;
+	positionAttrib.numElementsPerAttrib = 3;
+
+
+	//  normal
+	AttributeDescriptor normalAttrib;
+	normalAttrib.attributeLocation = AttributeLocations::NORMAL;
+	normalAttrib.attributeName = "normal";
+	normalAttrib.data = &normals[0];
+	normalAttrib.elementSize = sizeof(float);
+	normalAttrib.elementType = GL_FLOAT;
+
+	// number of triangles * 3 vertices per triangle * 3 floats per vertex
+	normalAttrib.numElements = numFaces * 3 * 3;
+	normalAttrib.numElementsPerAttrib = 3;
+
+	//  texture
+	AttributeDescriptor uvAttrib;
+	uvAttrib.attributeLocation = AttributeLocations::TEX_COORD;
+	uvAttrib.attributeName = "texture";
+	uvAttrib.data = &textureCoordinates[0];
+	uvAttrib.elementSize = sizeof(float);
+	uvAttrib.elementType = GL_FLOAT;
+
+	// number of triangles * 3 vertices per triangle * 2 floats per vertex
+	uvAttrib.numElements = numFaces * 3 * 2;
+	uvAttrib.numElementsPerAttrib = 2;
+
+	vbo.addAttributeArray(positionAttrib);
+	vbo.addAttributeArray(normalAttrib);
+	vbo.addAttributeArray(uvAttrib);
+	//... plus other attributes
+
+	vbo.createVBO();
 }
 

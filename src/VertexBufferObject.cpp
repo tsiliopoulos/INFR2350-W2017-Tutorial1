@@ -19,14 +19,41 @@ int VertexBufferObject::addAttributeArray(AttributeDescriptor attrib)
 
 void VertexBufferObject::createVBO()
 {
-	// CODE HERE /////////////////////////////////////////////////////////////
-	//////////////////////////////////////////////////////////////////////////
+	if (vaoHandle) {
+		destroy();
+	}
+
+	glGenVertexArrays(1, &vaoHandle);
+	glBindVertexArray(vaoHandle);
+
+	unsigned int numBuffers = attributeDescriptors.size();
+	vboHandles.resize(numBuffers);
+
+	glGenBuffers(numBuffers, &vboHandles[0]); // creates the vertex buffer object
+
+	for (int i = 0; i < numBuffers; i++) {
+		AttributeDescriptor* attrib = &attributeDescriptors[i];
+
+		glEnableVertexAttribArray(attrib->attributeLocation);
+		glBindBuffer(GL_ARRAY_BUFFER, vboHandles[i]);
+		glBufferData(GL_ARRAY_BUFFER, attrib->numElements * attrib->elementSize, 
+			attrib->data, GL_STATIC_DRAW);
+		glVertexAttribPointer(attrib->attributeLocation, attrib->numElementsPerAttrib,
+			attrib->elementType, GL_FALSE, 0, 0 );
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
+	}
+
+	glBindVertexArray(0);
 }
 
 void VertexBufferObject::draw()
 {
-	// CODE HERE /////////////////////////////////////////////////////////////
-	//////////////////////////////////////////////////////////////////////////
+	if (vaoHandle) {
+		glBindVertexArray(vaoHandle);
+		// number of vertices
+		glDrawArrays(GL_TRIANGLES, 0, 
+			attributeDescriptors[0].numElements / attributeDescriptors[0].numElementsPerAttrib);
+	}
 }
 
 void VertexBufferObject::destroy()

@@ -50,12 +50,12 @@ void initializeShaders()
 	std::string shaderPath = "../../Assets/Shaders/";
 
 	Shader vShader;
-	vShader.loadShaderFromFile(shaderPath + "default_100_v.glsl", GL_VERTEX_SHADER); // OLD GL
-	//vShader.loadShaderFromFile(shaderPath + "default_v.glsl", GL_VERTEX_SHADER); // NEW GL
+	//vShader.loadShaderFromFile(shaderPath + "default_100_v.glsl", GL_VERTEX_SHADER); // OLD GL
+	vShader.loadShaderFromFile(shaderPath + "default_v.glsl", GL_VERTEX_SHADER); // NEW GL
 
 	Shader fShader;
-	fShader.loadShaderFromFile(shaderPath + "default_100_f.glsl", GL_FRAGMENT_SHADER); // OLD GL
-	//fShader.loadShaderFromFile(shaderPath + "default_f.glsl", GL_FRAGMENT_SHADER); // NEW GL
+	//fShader.loadShaderFromFile(shaderPath + "default_100_f.glsl", GL_FRAGMENT_SHADER); // OLD GL
+	fShader.loadShaderFromFile(shaderPath + "default_f.glsl", GL_FRAGMENT_SHADER); // NEW GL
 
 	
 	defaultMaterial = std::make_shared<Material>();
