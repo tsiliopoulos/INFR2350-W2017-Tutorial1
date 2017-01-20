@@ -13,16 +13,35 @@ ShaderProgram::~ShaderProgram()
 
 void ShaderProgram::attachShader(Shader shader)
 {
-	// CODE HERE /////////////////////////////////////////////////////////////
-	//////////////////////////////////////////////////////////////////////////
+	if (handle == 0) {
+		handle = glCreateProgram();
+	}
+
+	if (shader.getHandle()) {
+		glAttachShader(handle, shader.getHandle());
+	}
 }
 
 int ShaderProgram::linkProgram()
 {
 	if (handle)
 	{
-		// CODE HERE /////////////////////////////////////////////////////////////
-		//////////////////////////////////////////////////////////////////////////
+		glLinkProgram(handle);
+
+		int linkStatus;
+		glGetProgramiv(handle, GL_LINK_STATUS, &linkStatus);
+
+		if (linkStatus) {
+			std::cout << "Shader linked successfully" << std::endl;
+			return handle;
+		}
+
+		int logLength;
+		glGetProgramiv(handle, GL_INFO_LOG_LENGTH, &logLength);
+
+		std::string log(logLength, ' ');
+		glGetProgramInfoLog(handle, logLength, &logLength, &log[0]);
+		std::cout << log << std::endl;
 	}
 	else
 	{
@@ -33,43 +52,41 @@ int ShaderProgram::linkProgram()
 
 void ShaderProgram::bind()
 {
-	// CODE HERE /////////////////////////////////////////////////////////////
-	//////////////////////////////////////////////////////////////////////////
+	glUseProgram(handle);
 }
 
 void ShaderProgram::unbind()
 {
-	// CODE HERE /////////////////////////////////////////////////////////////
-	//////////////////////////////////////////////////////////////////////////
+	glUseProgram(0);
 }
 
 void ShaderProgram::sendUniformInt(const std::string& uniformName, int intVal)
 {
-	// CODE HERE /////////////////////////////////////////////////////////////
-	//////////////////////////////////////////////////////////////////////////
+	int uniformLocation = getUniformLocation(uniformName);
+	glUniform1i(uniformLocation, intVal);
 }
 
 void ShaderProgram::sendUniformVec4(const std::string& uniformName, glm::vec4& vec4)
 {
-	// CODE HERE /////////////////////////////////////////////////////////////
-	//////////////////////////////////////////////////////////////////////////
+	int uniformLocation = getUniformLocation(uniformName);
+	glUniform4fv(uniformLocation, 1, &vec4[0]);
 }
 
 void ShaderProgram::sendUniformMat4(const std::string& uniformName, glm::mat4& mat4)
 {
-	// CODE HERE /////////////////////////////////////////////////////////////
-	//////////////////////////////////////////////////////////////////////////
+	int uniformLocation = getUniformLocation(uniformName);
+	glUniformMatrix4fv(uniformLocation, 1, false, &mat4[0][0]);
 }
 
 void ShaderProgram::destroy()
 {
-	// CODE HERE /////////////////////////////////////////////////////////////
-	//////////////////////////////////////////////////////////////////////////
+	if (handle) {
+		glDeleteProgram(handle);
+		handle = 0;
+	}
 }
 
 int ShaderProgram::getUniformLocation(const std::string& uniformName)
 {
-	// CODE HERE /////////////////////////////////////////////////////////////
-	//////////////////////////////////////////////////////////////////////////
-	return -1; // REMOVE THIS LINE
+	return glGetUniformLocation(handle, uniformName.c_str());
 }

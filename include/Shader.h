@@ -2,7 +2,7 @@
 #include <string>
 #include "GLEW/glew.h"
 
-class Shader
+class Shader // program that runs on the GPU
 {
 private:
 	unsigned int handle;

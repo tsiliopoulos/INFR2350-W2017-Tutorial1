@@ -57,14 +57,12 @@ void initializeShaders()
 	fShader.loadShaderFromFile(shaderPath + "default_100_f.glsl", GL_FRAGMENT_SHADER); // OLD GL
 	//fShader.loadShaderFromFile(shaderPath + "default_f.glsl", GL_FRAGMENT_SHADER); // NEW GL
 
-	// UNCOMMENT HERE //////////////////////////////////////////////////////////////////////////
-	//////////////////////////////////////////////////////////////////////////
-	/*
+	
 	defaultMaterial = std::make_shared<Material>();
 	defaultMaterial->shader->attachShader(vShader);
 	defaultMaterial->shader->attachShader(fShader);
 	defaultMaterial->shader->linkProgram();
-	*/
+	
 }
 
 void initializeScene()

@@ -80,17 +80,15 @@ void GameObject::update(float dt)
 
 void GameObject::draw(TTK::Camera &camera)
 {
-	// UNCOMMENT THIS ////////////////////////////////////////////////////////
-	//////////////////////////////////////////////////////////////////////////
-	/*
+	
 	material->shader->bind();
 	material->mat4Uniforms["u_mvp"] = camera.viewProjMatrix * m_pLocalToWorldMatrix;
 	material->mat4Uniforms["u_mv"] = camera.viewMatrix * m_pLocalToWorldMatrix;
 	material->vec4Uniforms["u_colour"] = colour;
 	material->sendUniforms();
-	*/
+	
 
-	glLoadMatrixf(glm::value_ptr(camera.viewProjMatrix * m_pLocalToWorldMatrix));
+	//glLoadMatrixf(glm::value_ptr(camera.viewProjMatrix * m_pLocalToWorldMatrix));
 
 	mesh->draw_1_0();
 	//mesh->draw();
